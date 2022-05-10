@@ -1,72 +1,131 @@
-//declaro la funcion saludar
-function saludar() {
-    alert(
-      "Bienvenido" +
-        nombre +
-        " a continuacion podra escojer productos de la tienda"
-    );
-  }
-  // declaro la funcion comprar producto
-  function comprarProducto() {
-    producto = prompt(
-      "elija uno de nuestros productos \n 1: Six pack de cerveza  \n 2: caja de vinos \n 3: energizantes"
-    );
-  
-    if (producto === "1") {
-      alert(" elegiste six pack de cerveza");
-    } else if (producto === "2") {
-      alert(" elegiste caja de vinos");
-    } else if (producto === "3") {
-      alert(" elegiste energizantes");
+// Nombre de la persona
+let nombre = prompt("escribe tu nombre");
+
+// Calculamos el momento del dia
+let fecha = new Date();
+let hora = fecha.getHours();
+let buenas;
+
+if (hora >= 0 && hora < 12) {
+  buenas = "Buenos días";
+} else if (hora >= 12 && hora < 19) {
+  buenas = "Buenas tardes";
+} else if (hora >= 19 && hora < 24) {
+  buenas = "Buenas noches";
+}
+alert(buenas + " " + nombre);
+
+// Hagamoslo incluyente
+let genero = prompt(
+  "Favor indicar como prefiere que me dirija a ud \n ( M-masculino, F-femenino y N-no definido ) "
+);
+
+if (genero == "F" || genero == "f") {
+  genero = "a";
+} else if (genero == "M" || genero == "m") {
+  genero = "o";
+} else {
+  genero = "e";
+}
+
+// Comprobamos el password
+let pass;
+let x = 0;
+do {
+  if (x === 3) {
+    bye("Strike: 3, OUT!!!");
+    break;
+  } else {
+    if (x > 0) {
+      alert("Strike: " + x);
     }
-    //aca vuelvo a preguntar por el prompt de opcion para terminar el proceso
-    opcion = prompt(
-      "vuelva a ingresar una opcion \n 1: comprar bebida \n 2: mostrar precios finales  \n 3: terminar"
-    );
+    x++;
   }
-  // declaro la funcion finalizar compra
-  function finalizarCompra() {
-    if (producto === "1") {
-      alert(
-        "usted eligio six pack de cerveza final de " +
-          sixPack * 1.21
-      );
-    } else if (producto === "2") {
-      alert(
-        "usted eligio caja de vinos  por un monto  final de " +
-          cajaVino * 1.21
-      );
-    } else if (producto == "3") {
-      alert(
-        "usted eligio energizantes por un monto  final de " +
-          energizante * 1.21
-      );
-    }
-  }
-  
-  // main
-  //declaro variables
-  let producto;
-  let sixPack = 1500;
-  let cajaVino = 2500;
-  let energizante = 2000;
-  let nombre = prompt("ingrese su nombre");
-  //llamo a la funcion saludar
-  saludar();
-  let opcion = prompt(
-    "ingrese una opcion: \n 1: comprar bebida \n 2: finalizar compra  \n 3: terminar  "
+  pass = prompt("escribe tu contraseña es un 123");
+
+  // Borrar esto antes de entregarlo
+  // if (pass === "") {
+  //   alert("esto es trampa!! ¬.¬");
+  //   break;
+  // }
+} while (pass !== "123");
+
+if (pass === "123") {
+  alert("Hola " + nombre + ", " + "bienvenido" + genero + " a Domuyo credit ");
+  // Comienza el catalogo
+  inicioCuestionario();
+} else {
+  alert("Nos vemos pronto");
+}
+
+function inicioCuestionario() {
+  let respCategorias = parseInt(
+    prompt("Categorias: \n 1: Pedi tu linea de credito \n Para salir cualquier otra cosa")
   );
-  //agrego bucle while, mientras la opcion no sea 3...
-  while (opcion !== "3") {
-    if (opcion === "1") {
-      comprarProducto();
-    }
-    if (opcion === "2") {
-      //si ingreso la opcion dos, llamo a la funcion finalizarCompra
-      //y le asigno el "3" a opcion para que corte el bucle
-      finalizarCompra();
-      opcion = "3";
-    }
+  categorias(respCategorias);
+}
+
+// este se encargara de resolver las categorias
+function categorias(respuesta) {
+  let respProducto;
+  if (respuesta === 1) {
+    respProducto = respuesta + "." + parseInt(prompt("Escoge tu linea de credito: \n 1: Sistema frances \n 2: Tasa fija \n 3: tasa variable  \n Para salir cualquier otra cosa"));
+    detalleProducto(parseFloat(respProducto));
+  } 
+}
+// este se encargara de resolver los productos
+function detalleProducto(respuesta) {
+  if (respuesta === 1.1) {
+    Articulo = "Sistema Frances";
+    Modelo = "Financia hasta en 48  ";
+    Precio = 165;
+    iva = Precio * 0.21;
+    inventario = 000;
+  } else if (respuesta === 1.2) {
+    Articulo = "Tasa Fija";
+    Modelo = "consulta la tasa";
+    Precio = 21.35;
+    iva = Precio * 0.16;
+    inventario = 15;
+  } else if (respuesta === 1.3) {
+    Articulo = "Tasa Variable";
+    Modelo = "sujeto a Uva";
+    Precio = 785.79;
+    iva = Precio * 0.16;
+    inventario = 3;
+  } 
+
+  fichaTecnica(Articulo, Modelo, Precio, iva, inventario);
+}
+
+function fichaTecnica(art, mod, costo, iva, existencias) {
+  alert(" Articulo:   " + art +
+    "\n Modelo:     " + mod +
+    "\n Precio:     $" + costo + " ( + $" + iva + " de I.V.A ) " +
+    "\n Inventario: " + existencias + " piezas"
+  );
+
+  respuesta = prompt("Quieres ver otro articulo? \n S=Sí N=No");
+  if (
+    respuesta === "si" ||
+    respuesta === "Si" ||
+    respuesta === "sí" ||
+    respuesta === "Sí" ||
+    respuesta === "s" ||
+    respuesta === "S"
+  ) {
+    inicioCuestionario();
+  } else {
+    bye("Bye " + nombre + ", hasta pronto!");
   }
-  
-  alert("gracias por su compra");
+}
+function sleep(milliseconds) {
+  const date = Date.now();
+  let currentDate = null;
+  do {
+    currentDate = Date.now();
+  } while (currentDate - date < milliseconds);
+}
+function bye(mensaje) {
+  alert(mensaje);
+}
